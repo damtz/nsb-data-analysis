@@ -1,0 +1,60 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <!-- font awesome icons -->
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- css stylesheet -->
+    <link rel="stylesheet" href="{% static 'css/signUP.css' %}">
+</head>
+<body>
+    <form action="" method="post">
+        {% csrf_token %}
+        <h3>CREATE ACCOUNT</h3>
+
+        <label for="username">Username</label>
+        <input type="text" placeholder="Enter Username" name="name" id="username" required>
+
+        <label for="email">Email</label>
+        <input type="email" placeholder="Enter Email" name="email" id="email" required>
+
+        <label for="password">Password</label>
+        <div class="password-toggle">
+            <input type="password" placeholder="Password" id="password" name="password" required>
+            <i id="toggle-icon" class="fas fa-eye toggle-icon"
+                onclick="togglePasswordVisibility('password', 'toggle-icon')"></i>
+        </div>
+
+        <label for="password1">Confirm Password</label>
+        <div class="password-toggle">
+            <input type="password" placeholder="confirm_pass" id="password1" name="confirm_pass" required>
+            <i id="toggle-icon1" class="fas fa-eye toggle-icon"
+                onclick="togglePasswordVisibility('password1', 'toggle-icon1')"></i>
+        </div>
+        {%  if message %}
+        <p style="color: red;">{{message}}</p>
+        {% endif %}
+        <button type="submit">Signup</button> <br><br>
+        <a href="">Already have an account? Signup </a>
+    </form>
+</body>
+<script>
+    function togglePasswordVisibility(fieldId, iconId) {
+        var passwordInput = document.getElementById(fieldId);
+        var toggleIcon = document.getElementById(iconId);
+
+        if (passwordInput.type === "password") {
+            passwordInput.type = "text";
+            toggleIcon.classList.remove("fa-eye");
+            toggleIcon.classList.add("fa-eye-slash");
+        } else {
+            passwordInput.type = "password";
+            toggleIcon.classList.remove("fa-eye-slash");
+            toggleIcon.classList.add("fa-eye");
+        }
+    }
+</script>
+</html>
