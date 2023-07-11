@@ -1,42 +1,23 @@
 from django.shortcuts import render, redirect
 from myapp.models import Users
 from django.http import JsonResponse
-from django.core.exceptions import ValidationError
 from django.contrib.auth import authenticate, login
-
-# Create your views here.
-# def signin(request):
-#     if request.method == 'POST':
-#         email = request.POST['email']
-#         password = request.POST['password']
-
-#         try:
-#             user = authenticate(request, username=email, password=password)
-#             if user is not None:
-#                 login(request, user)
-#                 return redirect('home')
-#             else:
-#                 # error_message = 'Invalid username or password.'
-#                 return render(request, 'login.html')
-#         except Exception as e:
-#             error_message = f"An error occurred: {str(e)}"
-#             return render(request, 'error.html', {'error_message': error_message})
-
-#     return render(request, 'login.html')
 
 def signin(request):
     if request.method == 'POST':
-        name = request.POST['username']
+        email = request.POST['email']
         password = request.POST['password']
-        user = authenticate(request, name=name, password=password)
+        user = authenticate(request, email=email, password=password)
+        print(email)
         print(user)
         if user is not None:
             login(request, user)
-            return render(request, 'home.html') 
+            return redirect('home') 
         else:
             return JsonResponse({'message': 'login failed'})
         
     return render(request, 'login.html')
+
 
 def register(request):
     if request.method == 'POST':

@@ -2,5 +2,12 @@
 <html>
     <body>
         <h2>hello</h2>
+        {% if user.is_authenticated %}
+        <p>{{ user }}</p>
+        <a href="">Logout</a>
+        {% else %}
+        <a href="/login">Login</a>
+        
+        {% endif %}
     </body>
 </html>
