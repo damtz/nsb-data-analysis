@@ -11,35 +11,54 @@
     <link rel="stylesheet" href="{% static 'css/signUP.css' %}">
 </head>
 <body>
-    <form action="" method="post">
-        {% csrf_token %}
-        <h3>CREATE ACCOUNT</h3>
-
-        <label for="username">Username</label>
-        <input type="text" placeholder="Enter Username" name="name" id="username" required>
-
-        <label for="email">Email</label>
-        <input type="email" placeholder="Enter Email" name="email" id="email" required>
-
-        <label for="password">Password</label>
-        <div class="password-toggle">
-            <input type="password" placeholder="Password" id="password" name="password" required>
-            <i id="toggle-icon" class="fas fa-eye toggle-icon"
-                onclick="togglePasswordVisibility('password', 'toggle-icon')"></i>
+    <div class="container">
+        <div class="cover">
+            <div class="back">
+                <div class="text">
+                    <span class="text-1">Sign up now and embark <br> on an exciting journey <br> with us!</span>
+                </div>
+            </div>
         </div>
-
-        <label for="password1">Confirm Password</label>
-        <div class="password-toggle">
-            <input type="password" placeholder="confirm_pass" id="password1" name="confirm_pass" required>
-            <i id="toggle-icon1" class="fas fa-eye toggle-icon"
-                onclick="togglePasswordVisibility('password1', 'toggle-icon1')"></i>
+        <div class="forms">
+            <div class="form-content">
+                <div class="signup-form">
+                    <div class="title">Signup</div>
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        <div class="input-boxes">
+                            <div class="input-box">
+                                <i class="fas fa-user"></i>
+                                <input type="text" placeholder="Enter your name" name="name" required>
+                            </div>
+                            <div class="input-box">
+                                <i class="fas fa-envelope"></i>
+                                <input type="email" placeholder="Enter your email" name="email" required>
+                            </div>
+                            <div class="input-box password-toggle">
+                                <i class="fas fa-lock"></i>
+                                <input type="password" placeholder="Enter your password"  name="password" required>
+                                <i id="toggle-icon" class="fas fa-eye toggle-icon"
+                                onclick="togglePasswordVisibility('password', 'toggle-icon')"></i>
+                            </div>
+                            <div class="input-box password-toggle">
+                                <i class="fas fa-lock"></i>
+                                <input type="password" placeholder="Confirm your password" name="confirm_pass" required>
+                                <i id="toggle-icon1" class="fas fa-eye toggle-icon"
+                                    onclick="togglePasswordVisibility('password1', 'toggle-icon1')"></i>
+                            </div>
+                            {%  if message %}
+                                <p style="color: red; font-size: 13px; text-align: center;">{{message}}</p>
+                            {% endif %}
+                            <div class="button input-box">
+                                <input type="submit" value="Submit">
+                            </div>
+                            <div class="text sign-up-text">Already have an account? <label><a href="{% url 'signin' %}">Login now</a></label></div>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
-        {%  if message %}
-        <p style="color: red;">{{message}}</p>
-        {% endif %}
-        <button type="submit">Signup</button> <br><br>
-        <a href="">Already have an account? Signup </a>
-    </form>
+    </div>
 </body>
 <script>
     function togglePasswordVisibility(fieldId, iconId) {

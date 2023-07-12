@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from myapp.models import Users
 from django.http import JsonResponse
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 
 def signin(request):
     if request.method == 'POST':
@@ -14,7 +14,7 @@ def signin(request):
             login(request, user)
             return redirect('home') 
         else:
-            return JsonResponse({'message': 'login failed'})
+           return render(request, 'login.html', {'message': "Invalid password or email"})
         
     return render(request, 'login.html')
 
@@ -40,6 +40,10 @@ def register(request):
 
         return redirect('signin')
     return render(request, 'register.html')
+
+def log_out(request):
+    logout(request)
+    return redirect ('signin')
 
 def home(request):
     return render(request, 'home.html')
