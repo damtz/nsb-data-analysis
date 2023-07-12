@@ -1,0 +1,77 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Design by foolishdeveloper.com -->
+    <title>Login Page</title>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+    <!--Stylesheet-->
+    <link rel="stylesheet"  href="{% static 'css/signin.css' %}">
+
+</head>
+
+<body>
+    <!-- <form action="{% url 'signin' %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <h3>Login Here</h3>
+        
+        <label for="email">Email</label>
+        <input type="text" placeholder="Enter Email" name="email" id="email">
+
+        <label for="password">Password</label>
+        <div class="password-toggle">
+            <input type="password" placeholder="Password" id="password" name="password">
+            <i id="toggle-icon" class="fas fa-eye toggle-icon" onclick="togglePasswordVisibility()"></i>
+        </div>
+        <button type="submit">Log In</button>
+        <br><br>
+        <a href="{% url 'register' %}">Create an account</a>
+    </form> -->
+    <div class="container">
+        <div class="cover">
+          <div class="front">
+            <div class="text">
+              <span class="text-1">Hello!</span>
+              <span class="text-2">Enter your personal details and <br>start journey with us</span>
+            </div>
+          </div>
+        </div>
+        <div class="forms">
+            <div class="form-content">
+              <div class="login-form">
+                <div class="title">Login</div>
+              <form action="{% url 'signin' %}" method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <div class="input-boxes">
+                  <div class="input-box">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" placeholder="Enter your email" name="email" required>
+                  </div>
+                  <div class="input-box password-toggle">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" placeholder="Enter your password" name="password" required>
+                    <i id="toggle-icon" class="fas fa-eye toggle-icon" onclick="togglePasswordVisibility()"></i>
+                  </div>
+                  <div class="text"><a href="#">Forgot password?</a></div>
+                  {%  if message %}
+                    <p style="color: red; font-size: 13px; text-align: center;">{{message}}</p>
+                  {% endif %}
+                  <div class="button input-box">
+                    <input type="submit" value="Submit">
+                  </div>
+                  <div class="text sign-up-text">Don't have an account? <a href="{% url 'register' %}">Signup now</a></div>
+                </div>
+            </form>
+          </div>
+        </div>
+        </div>
+      </div>
+</body>
+
+</html>

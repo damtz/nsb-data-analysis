@@ -1,0 +1,79 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <!-- font awesome icons -->
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- css stylesheet -->
+    <link rel="stylesheet" href="{% static 'css/signUP.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="cover">
+            <div class="back">
+                <div class="text">
+                    <span class="text-1">Sign up now and embark <br> on an exciting journey <br> with us!</span>
+                </div>
+            </div>
+        </div>
+        <div class="forms">
+            <div class="form-content">
+                <div class="signup-form">
+                    <div class="title">Signup</div>
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        <div class="input-boxes">
+                            <div class="input-box">
+                                <i class="fas fa-user"></i>
+                                <input type="text" placeholder="Enter your name" name="name" required>
+                            </div>
+                            <div class="input-box">
+                                <i class="fas fa-envelope"></i>
+                                <input type="email" placeholder="Enter your email" name="email" required>
+                            </div>
+                            <div class="input-box password-toggle">
+                                <i class="fas fa-lock"></i>
+                                <input type="password" placeholder="Enter your password"  name="password" required>
+                                <i id="toggle-icon" class="fas fa-eye toggle-icon"
+                                onclick="togglePasswordVisibility('password', 'toggle-icon')"></i>
+                            </div>
+                            <div class="input-box password-toggle">
+                                <i class="fas fa-lock"></i>
+                                <input type="password" placeholder="Confirm your password" name="confirm_pass" required>
+                                <i id="toggle-icon1" class="fas fa-eye toggle-icon"
+                                    onclick="togglePasswordVisibility('password1', 'toggle-icon1')"></i>
+                            </div>
+                            {%  if message %}
+                                <p style="color: red; font-size: 13px; text-align: center;">{{message}}</p>
+                            {% endif %}
+                            <div class="button input-box">
+                                <input type="submit" value="Submit">
+                            </div>
+                            <div class="text sign-up-text">Already have an account? <label><a href="{% url 'signin' %}">Login now</a></label></div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    function togglePasswordVisibility(fieldId, iconId) {
+        var passwordInput = document.getElementById(fieldId);
+        var toggleIcon = document.getElementById(iconId);
+
+        if (passwordInput.type === "password") {
+            passwordInput.type = "text";
+            toggleIcon.classList.remove("fa-eye");
+            toggleIcon.classList.add("fa-eye-slash");
+        } else {
+            passwordInput.type = "password";
+            toggleIcon.classList.remove("fa-eye-slash");
+            toggleIcon.classList.add("fa-eye");
+        }
+    }
+</script>
+</html>
