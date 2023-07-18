@@ -20,5 +20,3 @@ from django.conf.urls import include
 urlpatterns = [
     path('', include('myapp.urls')),
 ]
-
-
