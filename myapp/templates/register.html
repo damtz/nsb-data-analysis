@@ -8,7 +8,7 @@
      <!-- font awesome icons -->
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- css stylesheet -->
-    <link rel="stylesheet" href="{% static 'css/signUP.css' %}">
+    <link rel="stylesheet" href="{% static 'css/signup.css' %}">
 </head>
 <body>
     <div class="container">
@@ -37,14 +37,10 @@
                             <div class="input-box password-toggle">
                                 <i class="fas fa-lock"></i>
                                 <input type="password" placeholder="Enter your password"  name="password" required>
-                                <i id="toggle-icon" class="fas fa-eye toggle-icon"
-                                onclick="togglePasswordVisibility('password', 'toggle-icon')"></i>
                             </div>
                             <div class="input-box password-toggle">
                                 <i class="fas fa-lock"></i>
                                 <input type="password" placeholder="Confirm your password" name="confirm_pass" required>
-                                <i id="toggle-icon1" class="fas fa-eye toggle-icon"
-                                    onclick="togglePasswordVisibility('password1', 'toggle-icon1')"></i>
                             </div>
                             {%  if message %}
                                 <p style="color: red; font-size: 13px; text-align: center;">{{message}}</p>
@@ -60,20 +56,4 @@
         </div>
     </div>
 </body>
-<script>
-    function togglePasswordVisibility(fieldId, iconId) {
-        var passwordInput = document.getElementById(fieldId);
-        var toggleIcon = document.getElementById(iconId);
-
-        if (passwordInput.type === "password") {
-            passwordInput.type = "text";
-            toggleIcon.classList.remove("fa-eye");
-            toggleIcon.classList.add("fa-eye-slash");
-        } else {
-            passwordInput.type = "password";
-            toggleIcon.classList.remove("fa-eye-slash");
-            toggleIcon.classList.add("fa-eye");
-        }
-    }
-</script>
 </html>
