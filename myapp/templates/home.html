@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
     <body>
         <h2>hello</h2>
@@ -7,4 +7,224 @@
         <a href="{% url 'logout' %}">Logout</a>
         {% endif %}
     </body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chart Examples</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .card {
+            height: 100%;
+        }
+        .navbar {
+            background-color: white;
+            color: black;
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        .navbar p{
+            margin-left: auto;
+        }
+        .card-body .btn{
+            background-color: #F38F2B;
+            color: white;
+            padding: .6rem;
+            padding-left: 3rem;
+            padding-right: 3rem;
+            border-radius: 2rem;
+        }
+        .card-body .btn:hover{
+            background-color: white;
+            border: solid 2px #F38F2B;
+            color: black;
+        }
+        .card{
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        {% if user.is_authenticated %}
+        <p>{{ user }}</p>
+        <a href="{% url 'logout' %}">Logout</a>
+        {% endif %}
+    </nav>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 mb-4 mt-4 ">
+                <div class="card">
+                    <div class="card-header">
+                        Prediction 
+                    </div>
+                    <div class="card-body">
+                        <h3>Nu 18000</h3>
+                        <p>Predicted Value</p>
+                        <h3>6</h3>
+                        <p>Bathroom</p>
+                        <h3>3</h3>
+                        <p>BHK</p>
+                        <a href="{% url 'predict' %}" class="btn">PREDICT</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8 mb-4 mt-4">
+                <div class="card">
+                    <div class="card-header">
+                        Bar Graph
+                    </div>
+                    <div class="card-body">
+                        <canvas id="barGraph"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-4 ">
+                <div class="card">
+                    <div class="card-header">
+                        Donut Chart
+                    </div>
+                    <div class="card-body">
+                        <canvas id="donutChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-8 mb-4">
+                <div class="card">
+                    <div class="card-header">
+                        Histogram
+                    </div>
+                    <div class="card-body">
+                        <canvas id="histogram"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-8 mb-4">
+                <div class="card">
+                    <div class="card-header">
+                        Scatter Plot
+                    </div>
+                    <div class="card-body">
+                        <canvas id="scatterPlot"></canvas>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-header">
+                        Pie Chart
+                    </div>
+                    <div class="card-body">
+                        <canvas id="pieChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Initialize and configure the charts
+        var pieChart = new Chart(document.getElementById("pieChart"), {
+            type: 'pie',
+            data: {
+                labels: ["Family", "Bachelors", "Bachelors/Family"],
+                datasets: [{
+                    data: [10, 20, 30],
+                    backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"]
+                }]
+            }
+        });
+
+        var donutChart = new Chart(document.getElementById("donutChart"), {
+            type: 'doughnut',
+            data: {
+                labels: ["Mumbai", "Kolkata", "Delhi", "Chennai", "Bengalore", "Hyderabad"],
+                datasets: [{
+                    data: [10, 20, 30, 30, 10, 10],
+                    backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56","#FF5733", "#ECFF33","#5F9EA0"]
+                }]
+            }
+        });
+
+        var barGraph = new Chart(document.getElementById("barGraph"), {
+            type: 'bar',
+            data: {
+                labels: ["Red", "Blue", "Yellow"],
+                datasets: [{
+                    label: '# of Votes',
+                    data: [10, 20, 30],
+                    backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"]
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+
+        var histogram = new Chart(document.getElementById("histogram"), {
+            type: 'bar',
+            data: {
+                labels: ["A", "B", "C", "D", "E", "F"],
+                datasets: [{
+                    label: '# of Votes',
+                    data: [5, 10, 15, 7, 20, 12],
+                    backgroundColor: "#FFCE56"
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+
+        var scatterPlot = new Chart(document.getElementById("scatterPlot"), {
+            type: 'scatter',
+            data: {
+                datasets: [{
+                    label: 'Scatter Dataset',
+                    data: [
+                        { x: 1, y: 1 },
+                        { x: 2, y: 3 },
+                        { x: 3, y: -2 },
+                        { x: 4, y: 4 },
+                        { x: 5, y: 0 }
+                    ],
+                    backgroundColor: "#FF6384"
+                }]
+            },
+            options: {
+                scales: {
+                    xAxes: [{
+                        type: 'linear',
+                        position: 'bottom'
+                    }]
+                }
+            }
+        });
+    </script>
+</body>
+
 </html>

@@ -3,7 +3,6 @@ from myapp.models import Users
 from django.http import JsonResponse
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, logout
-from django.utils.http import urlsafe_base64_decode
 from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import send_mail
 from django.urls import reverse_lazy
@@ -15,8 +14,9 @@ from django.core.mail import send_mail
 from django.conf import settings
 import uuid
 from django.contrib.auth.hashers import make_password
-
-
+import pickle
+from django.views.decorators.csrf import csrf_protect
+import os
 
 def signin(request):
     if request.method == 'POST':
@@ -126,9 +126,37 @@ def reset_password(request, token):
 
     return render(request, 'reset_password.html')
 
-def password_reset_complete(request):
-    return render(request, 'password_reset_complete.html')
-
 
 def home(request):
     return render(request, 'home.html')
+
+def predict(request):
+    return render(request, 'predict.html')
+
+
+current_directory = os.path.dirname(os.path.abspath(__file__))
+# Construct the absolute file path to rent_model.pkl
+model_file_path = os.path.join(current_directory, 'rent_model.pkl')
+with open(model_file_path, 'rb') as model_file:
+    model = pickle.load(model_file)
+
+from datetime import datetime 
+def result(request):
+    rent_1 = 0  # Set a default value for rent_1
+    if request.method == 'POST':
+        v0 = int(request.POST['n0'])
+        v1 = float(request.POST['n1'])
+        v2 = int(request.POST['n2'])
+        v3 = str(request.POST['n3'])
+        v4 = str(request.POST['n4'])
+        
+        # Handle date field as a string and convert it to a numeric value if necessary
+        v5_str = request.POST['n5']
+        v5_date = datetime.strptime(v5_str, '%Y-%m-%d')
+        v5_numeric = int(v5_date.timestamp())
+
+        y = [[v0, v1, v2, v3, v4,v5_numeric]]
+        rent = model.predict(y)
+        rent_1 = round(rent[0], 2)
+
+    return render(request, "predict.html", {"predicted_rent": 'Predicted Rent:: Nu.' + format(rent_1)})

@@ -8,6 +8,7 @@ urlpatterns = [
     path('logout', views.log_out, name='logout'),
     path('reset-password/<str:token>/', views.reset_password, name='reset-password'),
     path('forgotpassword', views.forget_password, name='forgetpassword'),
-    path('password-reset-complete/', views.password_reset_complete, name='password_reset_complete'),
+    path('predict', views.predict, name='predict'),
+    path('result', views.result, name='result'),
 ]
 
