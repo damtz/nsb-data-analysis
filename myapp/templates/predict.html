@@ -5,9 +5,77 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Predict Form</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
-        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    
     <style>
+         .navbar {
+            background-color: white;
+            color: black;
+            align-items: right;
+            padding: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            justify-content: flex-end;
+        }
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        .navbar p.dropbtn {
+            color: rgb(138, 133, 133);
+            font-size: 16px;
+            cursor: pointer;
+            padding: 8px;
+            display: flex;
+            align-items: center;
+            margin-left: 10px;
+        }
+        .card-body .btn{
+            background-color: #F38F2B;
+            color: white;
+            padding: .6rem;
+            padding-left: 3rem;
+            padding-right: 3rem;
+            border-radius: 2rem;
+            height: auto;
+            width: auto;
+        }
+        .card-body .btn:hover{
+            background-color: white;
+            border: solid 2px #F38F2B;
+            color: black;
+        }
+        .card{
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: white;
+            min-width: 110px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            right: 0;
+            padding: 2px;
+            color: gray;
+        }
+
+        .show {
+            display: block;
+        }
+        .dropdown-content a {
+            color: gray; 
+            padding: 8px 16px; 
+            text-decoration: none;
+            display: flex;
+            align-items: center; 
+        }
+        .dropdown-content a i {
+            margin-right: 5px; 
+        }
+        .dropdown-content a:hover {
+            background-color: #f1f1f1; 
+            color: rgb(51, 50, 50); 
+        }
         .btn-trial {
             background-color: #F38F2B;
             color: white;
@@ -23,6 +91,17 @@
             border: solid 2px #F38F2B;
             color: black;
         }
+        .navbar {
+            background-color: white;
+            color: black;
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        .navbar p{
+            margin-left: auto;
+        }
         /* .submission h2{
             visibility: hidden;
         }
@@ -33,6 +112,22 @@
 </head>
 
 <body>
+    <nav class="navbar">
+        {% if user.is_authenticated %}
+        <div class="dropdown">
+            <p class="dropbtn" onclick="toggleDropdown()">
+                 Hello! {{ user.name }}
+            </p>
+            <i class="fa fa-angle-left" aria-hidden="true"></i>
+            <div class="dropdown-content" id="myDropdown">
+                <a href="{% url 'logout' %}">
+                    <i class="fas fa-power-off"></i>Logout
+                </a>
+            </div>
+            
+        </div>
+        {% endif %}
+    </nav>
     <div class="container">
         <div class="card mt-5">
             <div class="card-header text-center">
@@ -95,12 +190,12 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label for="inputPassword4">Posted on Date</label>
-                            <input type="date" class="form-control" id="inputPassword4" name="n5" required>
+                            <input type="date" class="form-control" id="inputPassword4" name="n5" required placeholder="MM/DD/YY">
                         </div>
                     </div>
                     <div class="submission">
                         <button type="submit" class="btn btn-trial mx-auto d-block" id="formpredictBtn">PREDICT</button>
-                        <h2 id="predictionText">{{predicted_rent}}</h2>
+                        <h2 id="predictionText" style="font-size: 20px; text-align: center; margin-top: 10px;">{{predicted_rent}}</h2>
                     </div>    
                 </form>
             </div>
@@ -108,6 +203,27 @@
     </div>
 
 </body>
+<!-- Include jQuery library -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Include jQuery UI library -->
+<script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
+
+<!-- Include jQuery UI Datepicker styling -->
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/smoothness/jquery-ui.css">
+
+
+<!-- JavaScript code to activate Datepicker -->
+<script>
+    $(document).ready(function() {
+        $("#inputPassword4").datepicker({
+            dateFormat: "y/mm/dd",
+            changeYear: true,
+            yearRange: "c-99:c+99" // Allow selecting dates from 99 years ago to 99 years in the future
+        });
+    });
+</script>
+
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
     integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
     crossorigin="anonymous"></script>
@@ -117,6 +233,24 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
     integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
     crossorigin="anonymous"></script>
-
 </script>
+<script>
+    function toggleDropdown() {
+        var dropdownContent = document.getElementById("myDropdown");
+        dropdownContent.classList.toggle("show");
+    }
+    
+    window.onclick = function(event) {
+        if (!event.target.matches('.dropbtn')) {
+            var dropdowns = document.getElementsByClassName("dropdown-content");
+            var i;
+            for (i = 0; i < dropdowns.length; i++) {
+                var openDropdown = dropdowns[i];
+                if (openDropdown.classList.contains('show')) {
+                    openDropdown.classList.remove('show');
+                }
+            }
+        }
+    }
+    </script>
 </html>
