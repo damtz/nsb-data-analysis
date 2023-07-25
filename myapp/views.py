@@ -136,7 +136,7 @@ def predict(request):
 
 import joblib
 # Load the pre-trained model from the pickle file
-model = joblib.load('/nsb-data-analysis/myapp/rent.pkl')
+model = joblib.load('rent.pkl')
 
 
 from datetime import datetime 
