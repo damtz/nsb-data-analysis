@@ -134,11 +134,10 @@ def predict(request):
     return render(request, 'predict.html')
 
 
-current_directory = os.path.dirname(os.path.abspath(__file__))
-# Construct the absolute file path to rent_model.pkl
-model_file_path = os.path.join(current_directory, 'rent_model.pkl')
-with open(model_file_path, 'rb') as model_file:
-    model = pickle.load(model_file)
+import joblib
+# Load the pre-trained model from the pickle file
+model = joblib.load('/Users/karmachoden/Desktop/nsb-data-analysis/myapp/rent.pkl')
+
 
 from datetime import datetime 
 def result(request):
@@ -150,13 +149,12 @@ def result(request):
         v3 = str(request.POST['n3'])
         v4 = str(request.POST['n4'])
         
-        # Handle date field as a string and convert it to a numeric value if necessary
         v5_str = request.POST['n5']
         v5_date = datetime.strptime(v5_str, '%Y-%m-%d')
         v5_numeric = int(v5_date.timestamp())
 
-        y = [[v0, v1, v2, v3, v4,v5_numeric]]
+        y = [[v0, v1, v2, v3, v4, v5_numeric]]
         rent = model.predict(y)
         rent_1 = round(rent[0], 2)
 
-    return render(request, "predict.html", {"predicted_rent": 'Predicted Rent:: Nu.' + format(rent_1)})
+    return render(request, "predict.html", {"predicted_rent": 'Predicted Rent:: Rupees.' + format(rent_1)})
