@@ -1,4 +1,4 @@
-
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -176,18 +176,6 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        // Initialize and configure the charts
-        var pieChart = new Chart(document.getElementById("pieChart"), {
-            type: 'pie',
-            data: {
-                labels: ["Family", "Bachelors", "Bachelors/Family"],
-                datasets: [{
-                    data: [10, 20, 30],
-                    backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"]
-                }]
-            }
-        });
-
         var donutChart = new Chart(document.getElementById("donutChart"), {
             type: 'doughnut',
             data: {
@@ -284,6 +272,8 @@
                 }
             }
         }
+
+        
         </script>
 </body>
 

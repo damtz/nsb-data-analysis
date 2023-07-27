@@ -1,7 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from myapp.models import Users
-from django.http import JsonResponse
-from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import send_mail
@@ -14,9 +12,8 @@ from django.core.mail import send_mail
 from django.conf import settings
 import uuid
 from django.contrib.auth.hashers import make_password
-import pickle
-from django.views.decorators.csrf import csrf_protect
-import os
+from datetime import datetime 
+from django.http import JsonResponse
 
 def signin(request):
     if request.method == 'POST':
@@ -136,25 +133,71 @@ def predict(request):
 
 import joblib
 # Load the pre-trained model from the pickle file
-model = joblib.load('/Users/karmachoden/Desktop/nsb-data-analysis/myapp/rent.pkl')
+# model = joblib.load('/Users/karmachoden/Desktop/nsb-data-analysis/myapp/rent.pkl')
+model_final= joblib.load('/Users/karmachoden/Desktop/nsb-data-analysis/myapp/finalized_model.pkl')
+
+# def result(request):
+#     rent_1 = 0  # Set a default value for rent_1
+#     v0, v1, v2, v3, v4, v5_numeric = None, None, None, None, None, None
+
+#     if request.method == 'POST':
+#         v0 = int(request.POST.get('n0', 0))
+#         v1 = float(request.POST.get('n1', 0))
+#         v2 = int(request.POST.get('n2', 0))
+#         v3 = request.POST.get('n3', '')
+#         v4 = request.POST.get('n4', '')
+        
+#         v5_str = request.POST.get('n5', '')
+#         if v5_str:
+#             v5_date = datetime.strptime(v5_str, '%Y-%m-%d')
+#             v5_numeric = int(v5_date.timestamp())
+
+#         y = [[v0, v1, v2, v3, v4, v5_numeric]]
+#         rent = model.predict(y)
+#         rent_1 = round(rent[0], 2)
+
+#          # If the request is made via AJAX, return JSON response
+#         if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
+#             return JsonResponse({"predicted_rent": str(rent_1)})
+        
+#         # If the request is made directly, return HTTP response
+#         return render(request, "predict.html", {"predicted_rent": format(rent_1)})
+
+#     return render(request, "predict.html")
 
 
-from datetime import datetime 
 def result(request):
     rent_1 = 0  # Set a default value for rent_1
-    if request.method == 'POST':
-        v0 = int(request.POST['n0'])
-        v1 = float(request.POST['n1'])
-        v2 = int(request.POST['n2'])
-        v3 = str(request.POST['n3'])
-        v4 = str(request.POST['n4'])
-        
-        v5_str = request.POST['n5']
-        v5_date = datetime.strptime(v5_str, '%Y-%m-%d')
-        v5_numeric = int(v5_date.timestamp())
+    v0, v1, v2, v3, v4 = None, None, None, None, None
 
-        y = [[v0, v1, v2, v3, v4, v5_numeric]]
-        rent = model.predict(y)
+    if request.method == 'POST':
+        v0 = int(request.POST.get('n0', 0))
+        v1 = float(request.POST.get('n1', 0))
+        v2 = request.POST.get('n2', '')
+        v3 = request.POST.get('n3', '')
+        v4 = int(request.POST.get('n4', '0'))
+        
+        # Create a DataFrame with the input features and their names matching the model's trained features
+        data = {
+            'BHK': [v0],
+            'Size': [v1],
+            'City':[v2],
+            'Furnishing Status':[v3],
+            'Bathroom': [v4],    
+        }
+        import pandas as pd
+        input_df = pd.DataFrame(data)
+
+        # y = [[v0, v1, v2, v3, v4]]
+        rent = model_final.predict(input_df)
         rent_1 = round(rent[0], 2)
 
-    return render(request, "predict.html", {"predicted_rent": 'Predicted Rent:: Rupees.' + format(rent_1)})
+         # If the request is made via AJAX, return JSON response
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
+            return JsonResponse({"predicted_rent": str(rent_1)})
+        
+        # If the request is made directly, return HTTP response
+        return render(request, "predict.html", {"predicted_rent": format(rent_1)})
+
+    return render(request, "predict.html")
+

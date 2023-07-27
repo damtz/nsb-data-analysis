@@ -44,6 +44,28 @@
             border: solid 2px #F38F2B;
             color: black;
         }
+        .closeBtnContainer {
+            display: flex;
+            justify-content: center; 
+            align-items: center; 
+            margin-top: 1rem; 
+        }
+        .closeBtn{
+            background-color: #F38F2B;
+            color: white;
+            padding: .2rem;
+            padding-left: 1rem;
+            padding-right: 1rem;
+            border-radius: 2rem;
+            height: auto;
+            width: auto;
+            border: #f1f1f1;
+        }
+        .closeBtn:hover{
+            background-color: white;
+            border: solid 2px #F38F2B;
+            color: black;
+        }
         .card{
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
         }
@@ -58,7 +80,6 @@
             padding: 2px;
             color: gray;
         }
-
         .show {
             display: block;
         }
@@ -102,12 +123,37 @@
         .navbar p{
             margin-left: auto;
         }
-        /* .submission h2{
-            visibility: hidden;
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            color: rgb(8, 7, 7);
+            padding: 20px;
+            border-radius: 5px;
+            z-index: 9999;
+            box-shadow: 2px 2px 4px 0 rgba(0, 0, 0, 0.2);
+            width: 400px;
+            font-size: 18px; 
         }
-        .submission h2:target {
-            visibility: visible;
-        } */
+        .backdrop {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 9998;
+        }
+        .popup.show {
+            display: block;
+        }  
+        .bold-text {
+            font-weight: bold;
+        } 
     </style>
 </head>
 
@@ -132,7 +178,7 @@
         <div class="card mt-5">
             <div class="card-header text-center">
                 <h4><b>House Rent Prediction</b></h3>
-            </div>
+            </div> <br>
             <div class="description text-center">
                 <h6>Enter House Details to Predict Rent</h6>
             </div>
@@ -158,18 +204,8 @@
                             <p>1 Meter Square = 10.76 Square Feet</p>
                         </div>
                         <div class="form-group col-md-6">
-                            <label for="inputState">Number of Bathrooms</label>
-                            <select id="inputState" class="form-control" name="n2">
-                                <option selected>Select the number of Bathrooms</option>
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                            </select>
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="inputState">City</label>
-                            <select id="inputState" class="form-control" name="n3" required>
+                            <label for="inputState2">City</label>
+                            <select id="inputState2" class="form-control" name="n2" required>
                                 <option selected>Select a City</option>
                                 <option>Kolkata</option>
                                 <option>Mumbai</option>
@@ -180,8 +216,8 @@
                             </select>
                         </div>
                         <div class="form-group col-md-6">
-                            <label for="inputState">Furnishing Status</label>
-                            <select id="inputState" class="form-control" name="n4">
+                            <label for="inputState3">Furnishing Status</label>
+                            <select id="inputState3" class="form-control" name="n3">
                                 <option selected>Select the Furnishing Status</option>
                                 <option>Furnished</option>
                                 <option>UnFurnished</option>
@@ -189,19 +225,38 @@
                             </select>
                         </div>
                         <div class="form-group col-md-6">
-                            <label for="inputPassword4">Posted on Date</label>
-                            <input type="date" class="form-control" id="inputPassword4" name="n5" required placeholder="MM/DD/YY">
-                        </div>
+                            <label for="inputState4">Number of Bathrooms</label>
+                            <select id="inputState4" class="form-control" name="n4">
+                                <option selected>Select the number of Bathrooms</option>
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                            </select>
+                        </div>               
                     </div>
                     <div class="submission">
-                        <button type="submit" class="btn btn-trial mx-auto d-block" id="formpredictBtn">PREDICT</button>
-                        <h2 id="predictionText" style="font-size: 20px; text-align: center; margin-top: 10px;">{{predicted_rent}}</h2>
-                    </div>    
+                        <button type="button" class="btn btn-trial mx-auto d-block" id="formpredictBtn">PREDICT</button>
+                    </div>
+                    <div class="backdrop" id="backdrop"></div> 
+                    <div class="popup" id="popup">
+                        <h3 style="text-align: center;">Result</h3>
+                        <h2 id="predictionText" style="font-size: 20px; text-align: center; margin-top: 10px;"></h2>
+                        <p>Number of BHK: <span id="v0"></span></p>
+                        <p>Size of the House (sq.ft): <span id="v1"></span></p>
+                        <p>City: <span id="v2"></span></p>
+                        <p>Furnishing Status: <span id="v3"></span></p>
+                        <p>Number of Bathrooms: <span id="v4"></span></p>
+                        <p id="predicted_rent"></p>
+                        <div class="closeBtnContainer">
+                            <button id="closeBtn" class="closeBtn">Close</button>
+                        </div>
+                    </div>  
+                    </div> 
                 </form>
             </div>
         </div>
     </div>
-
 </body>
 <!-- Include jQuery library -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -252,5 +307,46 @@
             }
         }
     }
-    </script>
+</script>
+<!-- JavaScript for the popup -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    // Function to display the popup with form data and predicted rent
+    function showPopup() {
+        const v0 = $("#inputState").val();
+        const v1 = $("#inputPassword4").val();
+        const v2 = $("#inputState2").val();
+        const v3 = $("#inputState3").val();
+        const v4 = $("#inputState4").val();
+        // const v5 = $("#inputDate").val();
+
+        $("#v0").text(v0);
+        $("#v1").text(v1);
+        $("#v2").text(v2);
+        $("#v3").text(v3);
+        $("#v4").text(v4);
+        // $("#v5_numeric").text(v5);
+
+        $.post("{% url 'result' %}", {n0: v0, n1: v1, n2: v2, n3: v3, n4: v4, csrfmiddlewaretoken: '{{ csrf_token }}'}, function(data) {
+            var predictedRentText = '<span class="bold-text">Predicted Rent: Rupees</span> ' + data.predicted_rent;
+            $("#predicted_rent").html(predictedRentText);
+
+            $("#popup").show();
+            $("#backdrop").show();
+        });
+    }
+
+    // Function to close the popup
+    function closePopup() {
+        $("#popup").hide();
+        $("#backdrop").hide();
+        $("#form")[0].reset();
+    }
+
+    // Attach event listener to the predict button
+    $("#formpredictBtn").on("click", showPopup);
+
+    $("#closeBtn").on("click", closePopup);
+</script>
+
 </html>
