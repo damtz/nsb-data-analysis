@@ -136,7 +136,7 @@ def predict(request):
 import joblib
 # Load the pre-trained model from the pickle file
 # model = joblib.load('/Users/karmachoden/Desktop/nsb-data-analysis/myapp/rent.pkl')
-model_final= joblib.load('/myapp/finalized_model.pkl')
+model_final= joblib.load('myapp/finalized_model.pkl')
 
 # def result(request):
 #     rent_1 = 0  # Set a default value for rent_1
