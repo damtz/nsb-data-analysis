@@ -164,6 +164,7 @@ model_final= joblib.load('/Users/karmachoden/Desktop/nsb-data-analysis/myapp/fin
         
 #         # If the request is made directly, return HTTP response
 #         return render(request, "predict.html", {"predicted_rent": format(rent_1)})
+model = joblib.load('myapp/rent.pkl')
 
 #     return render(request, "predict.html")
 
