@@ -12,8 +12,8 @@ from django.core.mail import send_mail
 from django.conf import settings
 import uuid
 from django.contrib.auth.hashers import make_password
-from datetime import datetime 
 from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
 
 def signin(request):
     if request.method == 'POST':
@@ -40,13 +40,16 @@ def register(request):
         confirm_pass = request.POST['confirm_pass']
         
         if len(password) < 8:
-           return render(request, 'register.html',  {'message': "Passwords should be atleast 8 length"})
+           return render(request, 'register.html', {'message': "Passwords should be atleast 8 length"})
                                                      
         if password != confirm_pass:
             return render(request, 'register.html', {'message': "Passwords do not match"})
         
         if password.isdigit():
-            return render(request, 'register.html', {'message': "Passwords do not match"})
+            return render(request, 'register.html', {'message': "Passwords should contain non digits too"})
+        
+        if Users.objects.filter(email = email).exists():
+            return render(request, 'register.html', {'message': "Email already exists. Please use a different email"})
         # creating new users
         user = Users(name=username, email=email, password=password)
         user.save()
@@ -67,8 +70,7 @@ def forget_password(request):
         try:
             user = User.objects.get(email=email)
         except User.DoesNotExist:
-            messages.error(request, 'User does not exist.')
-            return redirect('forget-password')
+            return render(request, 'forget-password.html',  {'message': "This email is not registered"})
 
         # Generate a unique token for password reset
         token = str(uuid.uuid4())
@@ -123,10 +125,10 @@ def reset_password(request, token):
 
     return render(request, 'reset_password.html')
 
-
+@login_required
 def home(request):
     return render(request, 'home.html')
-
+@login_required
 def predict(request):
     return render(request, 'predict.html')
 
@@ -165,7 +167,7 @@ model_final= joblib.load('/Users/karmachoden/Desktop/nsb-data-analysis/myapp/fin
 
 #     return render(request, "predict.html")
 
-
+@login_required
 def result(request):
     rent_1 = 0  # Set a default value for rent_1
     v0, v1, v2, v3, v4 = None, None, None, None, None
