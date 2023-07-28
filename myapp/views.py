@@ -164,7 +164,7 @@ model_final= joblib.load('myapp/finalized_model.pkl')
         
 #         # If the request is made directly, return HTTP response
 #         return render(request, "predict.html", {"predicted_rent": format(rent_1)})
-model = joblib.load('myapp/rent.pkl')
+# model = joblib.load('myapp/rent.pkl')
 
 #     return render(request, "predict.html")
 
