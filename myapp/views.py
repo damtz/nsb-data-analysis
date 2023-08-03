@@ -193,7 +193,7 @@ def result(request):
 
         # y = [[v0, v1, v2, v3, v4]]
         rent = model_final.predict(input_df)
-        rent_1 = round(rent[0], 2)
+        rent_1 = round(rent[0])
 
          # If the request is made via AJAX, return JSON response
         if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
