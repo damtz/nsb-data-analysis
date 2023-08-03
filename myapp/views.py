@@ -200,7 +200,7 @@ def result(request):
             return JsonResponse({"predicted_rent": str(rent_1)})
         
         # If the request is made directly, return HTTP response
-        return render(request, "predict.html", {"predicted_rent": format(rent_1)})
+        return render(request, "home.html", {"predicted_rent": format(rent_1)})
 
-    return render(request, "predict.html")
+    return render(request, "home.html")
 
