@@ -14,7 +14,7 @@
 
 
 
-## Overview of our Project
+## Overview of the Project
 * Registration and Login Page
 
 <img src="screenshot/1.png" width="600" height="400" />
@@ -163,7 +163,7 @@ scikit-learn==1.2.2
  ```
 git clone <remote-repo-url> 
 ```
-> Remote Repository Link
+> Remote Repository Link/url
  ```
 https://github.com/damtz/nsb-data-analysis.git 
 ```
@@ -180,7 +180,7 @@ python manage.py runserver
 * [Kinzang Dorji](https://github.com/kinzangdorji-2000)
 * [Damber Singh Subedi](https://github.com/damtz)
 * [Saraswati Acharja](https://github.com/TsheringDuba23)
-* ([Pema Zangmo](https://github.com/Saraswati-2000)
+* [Pema Zangmo](https://github.com/Saraswati-2000)
 * [Karma Choden](https://github.com/kc-ch)
 
 
