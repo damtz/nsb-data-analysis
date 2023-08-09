@@ -179,8 +179,8 @@ python manage.py runserver
 * [Tshering Duba](https://github.com/TsheringDuba23) 
 * [Kinzang Dorji](https://github.com/kinzangdorji-2000)
 * [Damber Singh Subedi](https://github.com/damtz)
-* [Saraswati Acharja](https://github.com/TsheringDuba23)
-* [Pema Zangmo](https://github.com/Saraswati-2000)
+* [Saraswati Acharja](https://github.com/Saraswati-2000)
+* [Pema Zangmo](https://github.com/pemazangmo21)
 * [Karma Choden](https://github.com/kc-ch)
 
 
