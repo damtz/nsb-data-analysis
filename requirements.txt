@@ -123,6 +123,5 @@ yellowbrick==1.5
 zipp==3.16.2
 Pandas==1.5.3
 NumPy==1.22.4
-sklearn
 scikit-learn==1.2.2
 
